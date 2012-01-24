@@ -1,9 +1,29 @@
 = tempus
 
-Description goes here.
+Gem to efficiently manipulate the time, adding, subtracting and converting hours.
+
+== EXAMPLE USAGE
+
+  hours = Tempus.new(30.hours  + 5.minutes + 3.seconds)
+  => <Tempus:8508680 seconds=108303.0, formated=30:05:03>
+  hours.value_in_minutes
+  => 1805.05
+  hours.to_s("%H hours and %M minutes")
+  => "30 hours and 05 minutes"
+
+  hours = "35:05:01".to_tempus
+  => <Tempus:7228060 seconds=126301.0, formated=35:05:01>
+  hours + 6.hours
+  => <Tempus:6931320 seconds=147901.0, formated=41:05:01>
+
+  "1:00:00".to_tempus + "2:00"
+  => <Tempus:6634700 seconds=10800.0, formated=03:00:00>
+
+  Tempus.new  Time.now
+  => <Tempus:6578680 seconds=46455.162950918, formated=12:54:15>
 
 == Contributing to tempus
- 
+
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet.
 * Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it.
 * Fork the project.
@@ -16,4 +36,3 @@ Description goes here.
 
 Copyright (c) 2012 Danilo Jeremias da Silva. See LICENSE.txt for
 further details.
-
