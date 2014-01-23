@@ -18,7 +18,7 @@ Jeweler::Tasks.new do |gem|
   gem.license = "MIT"
   gem.summary = %Q{Gem to manipulate efficiently time}
   gem.description = %Q{Gem to efficiently manipulate the time, adding, subtracting and converting hours.}
-  gem.email = "danilo.silva@euax.com.br"
+  gem.email = "daniloj.dasilva@gmail.com"
   gem.authors = ["Danilo Jeremias da Silva"]
 end
 Jeweler::RubygemsDotOrgTasks.new
@@ -29,9 +29,10 @@ RSpec::Core::RakeTask.new(:spec) do |spec|
   spec.pattern = FileList['spec/**/*_spec.rb']
 end
 
-RSpec::Core::RakeTask.new(:rcov) do |spec|
-  spec.pattern = 'spec/**/*_spec.rb'
-  spec.rcov = true
+desc "Code coverage detail"
+task :simplecov do
+  ENV['COVERAGE'] = "true"
+  Rake::Task['spec'].execute
 end
 
 task :default => :spec

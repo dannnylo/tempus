@@ -7,12 +7,12 @@ describe "Tempus" do
     @negative_hours = Tempus.new(-30.hours  - 5.minutes - 3.seconds)
   end
 
-  it "new" do
+  it "validates the object creation" do
     @hours.should_not == nil
     @negative_hours.should_not == nil
   end
 
-  it "set" do
+  it "set value" do
     hours = @hours.clone
     hours.object_id.should_not == @hours.object_id
     hours.set(125).should == 125.0
@@ -25,7 +25,7 @@ describe "Tempus" do
     hours.to_s("%M:%S").should == "00:00"
   end
 
-  it "to_s" do
+  it "test output" do
     @hours.respond_to?("to_s").should == true
     @hours.to_s("").should == ""
     @hours.to_s().should == "30:05:03"
@@ -44,6 +44,16 @@ describe "Tempus" do
     #Por enquanto existe este bug
     @negative_hours.to_s("hours Utilizadas: %H:%M").should == "-hours Utilizadas: 30:05" #FIXME: Corrigir este problema.
     @negative_hours.to_s("%H:%M:%S").should == "-30:05:03"
+
+    @hours.human.should == "30 horas 5 minutos e 3 segundos"
+    @negative_hours.human.should == "menos 30 horas 5 minutos e 3 segundos"
+
+    @hours.positive?.should == true
+    @hours.negative?.should == false
+
+    @negative_hours.positive?.should == false
+    @negative_hours.negative?.should == true
+
   end
 
   it "plus" do
@@ -66,10 +76,38 @@ describe "Tempus" do
     (@hours - @negative_hours ).to_s.should == "60:10:06"
   end
 
-  it "String to Tempus" do
-    "12:05:35".to_tempus.value.should == Tempus.new(12.hours  + 5.minutes + 35.seconds).value
-    "01:00:01".to_tempus.value.should == Tempus.new(1.hours + 1.seconds).value
-    "30:5:3".to_tempus.should == @hours
-    "-30:5:3".to_tempus.should == @negative_hours
+  it "validates the value in methods" do
+    1.day.to_tempus.value_in_days.should == 1
+    1.day.to_tempus.to_xls_time.should == 1
+    2.hours.to_tempus.value_in_hours.should == 2
+    30.minutes.to_tempus.value_in_hours.should == 0.5
+    30.minutes.to_tempus.value_in_minutes.should == 30
+  end
+
+
+  describe "Other Class" do
+    it "String to Tempus" do
+      "12:05:35".to_tempus.value.should == Tempus.new(12.hours  + 5.minutes + 35.seconds).value
+      "01:00:01".to_tempus.value.should == Tempus.new(1.hours + 1.seconds).value
+      "30:5:3".to_tempus.should == @hours
+      "-30:5:3".to_tempus.should == @negative_hours
+    end
+
+    it "Fixnum to Tempus" do
+      3723.to_tempus.to_s.should == "01:02:03"
+      3723.to_tempus.inspect.should == "<Tempus seconds=3723.0, formated=01:02:03>"
+    end
+
+    it "Float to Tempus" do
+      3723.0.to_tempus.to_string.should == "01:02:03"
+    end
+
+    it "Time to Tempus" do
+      Time.parse("2014-01-01 01:02:03").to_tempus.to_i.should == 3723
+    end
+
+    it "nil to Tempus" do
+      nil.to_tempus.value.should == 0
+    end
   end
 end

@@ -1,5 +1,5 @@
 = tempus
-
+{<img src="https://badge.fury.io/rb/tempus.png" alt="Gem Version" />}[http://badge.fury.io/rb/tempus]
 Gem to efficiently manipulate the time, adding, subtracting and converting hours.
 
 == EXAMPLE USAGE

@@ -37,19 +37,25 @@ class Tempus
   ## >> horas.to_s("%H*%M*%S")
   ## => "-30*05*03"
   def to_s(format="%H:%M:%S")
-    h = ("%02d" % convert[0].to_i.abs)
-    m = ("%02d" % convert[1].to_i.abs)
-    s = ("%02d" % convert[2].to_i.abs)
-    n = @value<0 ? "-" : ""
-    str = format.to_s.gsub("%h","%H").gsub("%m","%M").gsub("%s","%S").gsub("%hh","%H").gsub("%mm","%M").gsub("%ss","%S")
-    str.gsub!("%H",h)
-    str.gsub!("%HH",h)
-    str.gsub!("%M",m)
-    str.gsub!("%MM",m)
-    str.gsub!("%S",s)
-    str.gsub!("%SS",s)
-    str = n + str unless(str=="")
-    str
+    h, m, s = ("%02d" % hours.to_i.abs), ("%02d" % minutes.to_i.abs), ("%02d" % seconds.to_i.abs)
+    text = format.to_s
+    [
+      ["%h", "%H"],
+      ["%m", "%M"],
+      ["%s", "%S"],
+      ["%hh", "%H"],
+      ["%mm", "%M"],
+      ["%ss", "%S"],
+      ["%H", h],
+      ["%HH", h],
+      ["%M", m],
+      ["%MM", m],
+      ["%S", s],
+      ["%SS", s]
+    ].each{|string, replace|text.gsub!(string,replace) }
+
+    return (negative? ? "-" : "") + text unless(text=="")
+    text
   end
 
   def convert
@@ -129,17 +135,26 @@ class Tempus
     end
   end
 
-  #Criando método para conversão para Inteiro
+  def operation(value, operation, other_value)
+    if(value.class == Tempus)
+      value = Tempus.new(@value - v.value_in_seconds)
+    elsif(value.class == NilClass)
+      self
+    elsif(v.class == String)
+      Tempus.new(@value - v.to_tempus.value_in_seconds)
+    else
+      Tempus.new(@value - v)
+    end
+  end
+
   def to_i
     value_in_seconds
   end
 
-  #Método para verificar se o valor é negativo
   def negative?
     to_i < 0
   end
 
-  #Método para verificar se o valor é positivo
   def positive?
     to_i >= 0
   end
@@ -149,7 +164,7 @@ class Tempus
   end
 
   def inspect
-    "<Tempus:#{self.object_id} seconds=#{value}, formated=#{to_s}>"
+    "<Tempus seconds=#{value}, formated=#{to_s}>"
   end
 
   def ==(object)
