@@ -1,6 +1,10 @@
 source "http://rubygems.org"
 
-gem "activesupport", ">= 2.3.5"
+if RUBY_VERSION < "1.9.3"
+  gem "activesupport", [">= 2.3.5", '< 4.0.0']
+else
+  gem "activesupport", ">= 2.3.5"
+end
 gem "i18n"
 
 # Add dependencies to develop your gem here.
