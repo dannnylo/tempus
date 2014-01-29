@@ -1,10 +1,6 @@
 source "http://rubygems.org"
 
-if RUBY_VERSION < "1.9.3"
-  gem "activesupport", [">= 2.3.5", '< 4.0.0']
-else
-  gem "activesupport", ">= 2.3.5"
-end
+gem "activesupport", ">= 2.3.5"
 gem "i18n"
 
 # Add dependencies to develop your gem here.
@@ -15,4 +11,5 @@ group :development do
   gem "bundler", "~> 1.0"
   gem "jeweler", "~> 2.0.0"
   gem "simplecov", ">= 0"
+  gem 'coveralls', require: false
 end
