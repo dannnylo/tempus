@@ -110,41 +110,13 @@ class Tempus
   end
 
   #Soma valores ao objeto
-  def + v
-    if(v.class == Tempus)
-      Tempus.new(@value + v.value_in_seconds)
-    elsif(v.class == NilClass)
-      self
-    elsif(v.class == String)
-      Tempus.new(@value + v.to_tempus.value_in_seconds)
-    else
-      Tempus.new(@value + v)
-    end
+  def + value
+    Tempus.new(@value + value_by_class(value))
   end
 
   #Subtrai valores ao objeto
-  def - v
-    if(v.class == Tempus)
-      Tempus.new(@value - v.value_in_seconds)
-    elsif(v.class == NilClass)
-      self
-    elsif(v.class == String)
-      Tempus.new(@value - v.to_tempus.value_in_seconds)
-    else
-      Tempus.new(@value - v)
-    end
-  end
-
-  def operation(value, operation, other_value)
-    if(value.class == Tempus)
-      value = Tempus.new(@value - v.value_in_seconds)
-    elsif(value.class == NilClass)
-      self
-    elsif(v.class == String)
-      Tempus.new(@value - v.to_tempus.value_in_seconds)
-    else
-      Tempus.new(@value - v)
-    end
+  def - value
+    Tempus.new(@value - value_by_class(value))
   end
 
   def to_i
@@ -167,12 +139,25 @@ class Tempus
     "<Tempus seconds=#{value}, formated=#{to_s}>"
   end
 
+  def to_tempus
+    self
+  end
+
   def ==(object)
     if object.is_a?(Tempus)
       value == object.value
     else
       false
     end
+  end
+
+  private
+
+  def value_by_class(value)
+    value = 0 if value.class == NilClass
+    value = value.to_tempus if value.class == String
+    value = value.value_in_seconds if value.class == Tempus
+    value.to_f
   end
 end
 
