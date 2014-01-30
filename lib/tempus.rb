@@ -139,10 +139,6 @@ class Tempus
     "<Tempus seconds=#{value}, formated=#{to_s}>"
   end
 
-  def to_tempus
-    self
-  end
-
   def ==(object)
     if object.is_a?(Tempus)
       value == object.value
