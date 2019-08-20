@@ -82,20 +82,6 @@ class Tempus
 
   alias to_string to_s
 
-  def convert
-    valor = @data.to_f
-
-    h = (valor.to_f / 1.hour).to_i
-
-    valor = valor.to_f - h.hours.to_f
-
-    m = (valor.to_f / 1.minute).to_i
-
-    s = (valor.to_f - m.minutes).to_i
-
-    [h, m, s]
-  end
-
   def seconds
     ((data.to_f - hours.hour - minutes.minute) / 1.second).to_i
   end
