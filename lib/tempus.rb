@@ -4,6 +4,7 @@ require 'active_support'
 require 'active_support/core_ext'
 
 require 'tempus/version'
+require 'tempus/tempus_helper'
 
 # Class to manipulate efficiently time
 #=== Example:
@@ -21,14 +22,14 @@ class Tempus
   delegate :to_i, :to_f, :negative?, :positive?, to: :data
 
   def initialize(value = 0, only_hours = true)
-    @data = cast(value, only_hours)
+    @data = transform(value, only_hours)
   end
 
   def set(value, only_hours = true)
-    @data = cast(value, only_hours)
+    @data = transform(value, only_hours)
   end
 
-  def cast(value, only_hours = true)
+  def transform(value, only_hours = true)
     return from_string(value).to_f if value.is_a?(String)
     return from_time(value, only_hours).to_f if value.is_a?(Time)
 
@@ -48,10 +49,6 @@ class Tempus
 
   def from_time(value, only_hours = true)
     (only_hours ? value - value.beginning_of_day : value).to_f
-  end
-
-  def serialize(_value)
-    data.to_tempus.to_f
   end
 
   # Format the duration to para HH:MM:SS .
@@ -114,12 +111,12 @@ class Tempus
 
   # Soma valores ao objeto
   def +(other)
-    Tempus.new(data + cast(other))
+    Tempus.new(data + transform(other))
   end
 
   # Subtrai valores ao objeto
   def -(other)
-    Tempus.new(data - cast(other))
+    Tempus.new(data - transform(other))
   end
 
   def human
@@ -134,12 +131,5 @@ class Tempus
     return false unless object.is_a?(Tempus)
 
     data == object.data
-  end
-end
-
-class Object
-  # Convert object to tempus
-  def to_tempus
-    Tempus.new(self)
   end
 end

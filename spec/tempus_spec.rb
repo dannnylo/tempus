@@ -78,29 +78,11 @@ RSpec.describe Tempus do
     expect(30.minutes.to_tempus.value_in_minutes).to eq(30)
   end
 
-  describe 'Others Class' do
-    it 'String to Tempus' do
-      expect('12:05:35'.to_tempus.data).to eq(Tempus.new(12.hours + 5.minutes + 35.seconds).data)
-      expect('01:00:01'.to_tempus.data).to eq(Tempus.new(1.hours + 1.seconds).data)
-      expect('30:5:3'.to_tempus).to eq(hours)
-      expect('-30:5:3'.to_tempus).to eq(negative_hours)
-    end
-
-    it 'Number to Tempus' do
-      expect(3723.to_tempus.to_s).to eq('01:02:03')
-      expect(3723.to_tempus.inspect).to eq('<Tempus seconds=3723.0, formated=01:02:03>')
-    end
-
-    it 'Float to Tempus' do
-      expect(3723.0.to_tempus.to_string).to eq('01:02:03')
-    end
-
-    it 'Time to Tempus' do
-      expect(Time.parse('2014-01-01 01:02:03').to_tempus.to_i).to eq(3723)
-    end
-
-    it 'nil to Tempus' do
-      expect(nil.to_tempus.data).to eq(0)
-    end
+  it 'validates the value in methods' do
+    expect(1.day.to_tempus.value_in_days).to eq(1)
+    expect(1.day.to_tempus.to_xls_time).to eq(1)
+    expect(2.hours.to_tempus.value_in_hours).to eq(2)
+    expect(30.minutes.to_tempus.value_in_hours).to eq(0.5)
+    expect(30.minutes.to_tempus.value_in_minutes).to eq(30)
   end
 end
