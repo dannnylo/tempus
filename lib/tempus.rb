@@ -13,9 +13,9 @@ require 'tempus/tempus_helper'
 class Tempus
   class Error < StandardError; end
 
-  HOURS_REGEX = /(\%h|\%hh|\%H|%HH)/.freeze
-  MINUTES_REGEX = /(\%m|\%mm|\%M|%MM)/.freeze
-  SECONDS_REGEX= /(\%s|\%ss|\%S|%SS)/.freeze
+  HOURS_REGEX = /(\%h|\%hh|\%H|%HH)/
+  MINUTES_REGEX = /(\%m|\%mm|\%M|%MM)/
+  SECONDS_REGEX = /(\%s|\%ss|\%S|%SS)/
 
   attr_accessor :data
 
@@ -73,8 +73,8 @@ class Tempus
     text['%'] = '-%' if negative?
 
     text.gsub(HOURS_REGEX, format('%02d', hours.to_i.abs))
-      .gsub(MINUTES_REGEX, format('%02d', minutes.to_i.abs))
-      .gsub(SECONDS_REGEX, format('%02d', seconds.to_i.abs))
+        .gsub(MINUTES_REGEX, format('%02d', minutes.to_i.abs))
+        .gsub(SECONDS_REGEX, format('%02d', seconds.to_i.abs))
   end
 
   alias to_string to_s
@@ -93,12 +93,12 @@ class Tempus
 
   alias value_in_seconds to_i
 
-  # Criando método para conversão para horas.
+  # Convert value to hours.
   def value_in_hours
     to_i / 1.hour.to_f
   end
 
-  # Criando método para conversão para horas.
+  # Convert value to minutes.
   def value_in_minutes
     to_i / 1.minute.to_f
   end
@@ -109,27 +109,33 @@ class Tempus
 
   alias to_xls_time value_in_days
 
-  # Soma valores ao objeto
+  # Sum values of instance
   def +(other)
     Tempus.new(data + transform(other))
   end
 
-  # Subtrai valores ao objeto
+  # Subtract values of instance
   def -(other)
     Tempus.new(data - transform(other))
   end
 
   def human
-    "#{'menos ' if negative?}#{hours.abs} horas #{minutes.abs} minutos e #{seconds.abs} segundos"
+    [
+      ('menos' if negative?),
+      "#{hours.abs} horas",
+      "#{minutes.abs} minutos",
+      "e",
+      "#{seconds.abs} segundos"
+    ].compact.join(' ')
   end
 
   def inspect
     "<Tempus seconds=#{data}, formated=#{self}>"
   end
 
-  def ==(object)
-    return false unless object.is_a?(Tempus)
+  def ==(other)
+    return false unless other.is_a?(Tempus)
 
-    data == object.data
+    data == other.data
   end
 end
