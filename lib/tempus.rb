@@ -13,9 +13,9 @@ require 'tempus/tempus_helper'
 class Tempus
   class Error < StandardError; end
 
-  HOURS_REGEX = /(\%h|\%hh|\%H|%HH)/
-  MINUTES_REGEX = /(\%m|\%mm|\%M|%MM)/
-  SECONDS_REGEX = /(\%s|\%ss|\%S|%SS)/
+  HOURS_REGEX = /(\%h|\%hh|\%H|\%HH)/.freeze
+  MINUTES_REGEX = /(\%m|\%mm|\%M|\%MM)/.freeze
+  SECONDS_REGEX = /(\%s|\%ss|\%S|\%SS)/.freeze
 
   attr_accessor :data
 
@@ -68,16 +68,18 @@ class Tempus
   def to_s(string = '%H:%M:%S')
     text = string.dup
 
-    return '' if text == ''
+    text['%'] = '-%' if text != '' && negative?
 
-    text['%'] = '-%' if negative?
-
-    text.gsub(HOURS_REGEX, format('%02d', hours.to_i.abs))
-        .gsub(MINUTES_REGEX, format('%02d', minutes.to_i.abs))
-        .gsub(SECONDS_REGEX, format('%02d', seconds.to_i.abs))
+    text = text.gsub(HOURS_REGEX, format_number_abs(hours))
+    text = text.gsub(MINUTES_REGEX, format_number_abs(minutes))
+    text.gsub(SECONDS_REGEX, format_number_abs(seconds))
   end
 
   alias to_string to_s
+
+  def format_number_abs(number)
+    format('%02d', number.to_i.abs)
+  end
 
   def seconds
     ((data.to_f - hours.hour - minutes.minute) / 1.second).to_i
@@ -124,7 +126,7 @@ class Tempus
       ('menos' if negative?),
       "#{hours.abs} horas",
       "#{minutes.abs} minutos",
-      "e",
+      'e',
       "#{seconds.abs} segundos"
     ].compact.join(' ')
   end
