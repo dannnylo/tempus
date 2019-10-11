@@ -70,6 +70,11 @@ RSpec.describe Tempus do
     expect((hours - negative_hours).to_s).to eq('60:10:06')
   end
 
+  it 'multiplication' do
+    expect((hours * 2).to_s).to eq('60:10:06')
+    expect((hours * 0.5).to_s).to eq('15:02:31')
+  end
+
   it 'validates the value in methods' do
     expect(1.day.to_tempus.value_in_days).to eq(1)
     expect(1.day.to_tempus.to_xls_time).to eq(1)
