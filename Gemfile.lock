@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    tempus (1.0.0)
+    tempus (1.0.1)
       activesupport (> 5)
 
 GEM
