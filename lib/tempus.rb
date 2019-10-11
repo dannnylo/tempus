@@ -4,6 +4,7 @@ require 'active_support'
 require 'active_support/core_ext'
 
 require 'tempus/version'
+require 'tempus/parser'
 require 'tempus/tempus_helper'
 
 # Class to manipulate efficiently time
@@ -16,39 +17,20 @@ class Tempus
   HOURS_REGEX = /(\%h|\%hh|\%H|\%HH)/.freeze
   MINUTES_REGEX = /(\%m|\%mm|\%M|\%MM)/.freeze
   SECONDS_REGEX = /(\%s|\%ss|\%S|\%SS)/.freeze
+  OPERATIONS = %i[+ - * /].freeze
 
   attr_reader :data
 
   delegate :to_i, :to_f, :negative?, :positive?, to: :data
 
   def initialize(value = 0, only_hours = true)
-    @data = transform(value, only_hours)
+    @parser = Parser.new(only_hours)
+
+    set(value)
   end
 
-  def set(value, only_hours = true)
-    @data = transform(value, only_hours)
-  end
-
-  def transform(value, only_hours = true)
-    return from_string(value).to_f if value.is_a?(String)
-    return from_time(value, only_hours).to_f if value.is_a?(Time)
-
-    value.to_f
-  end
-
-  def from_string(value)
-    str = value.to_s.split(':')
-    value = 0
-
-    %i[hours minutes seconds].each_with_index do |m, i|
-      value += str.at(i).to_i.abs.send(m.to_s)
-    end
-
-    str.to_s.include?('-') ? value * -1 : value
-  end
-
-  def from_time(value, only_hours = true)
-    (only_hours ? value - value.beginning_of_day : value).to_f
+  def set(value)
+    @data = @parser.parse(value)
   end
 
   # Format the duration to para HH:MM:SS .
@@ -111,26 +93,6 @@ class Tempus
 
   alias to_xls_time value_in_days
 
-  # Sum values of instance
-  def +(other)
-    Tempus.new(data + transform(other))
-  end
-
-  # Subtract values of instance
-  def -(other)
-    Tempus.new(data - transform(other))
-  end
-
-  # Multiplication values of instance
-  def *(other)
-    Tempus.new(data * transform(other))
-  end
-
-  # Division values of instance
-  def /(other)
-    Tempus.new(data / transform(other))
-  end
-
   def human
     [
       ('menos' if negative?),
@@ -149,5 +111,15 @@ class Tempus
     return false unless other.is_a?(Tempus)
 
     data == other.data
+  end
+
+  def method_missing(method_name, *args, &block)
+    return super unless OPERATIONS.include?(method_name)
+
+    @data.send(method_name, @parser.parse(args.first)).to_tempus
+  end
+
+  def respond_to_missing?(method_name, include_private = false)
+    OPERATIONS.include?(method_name.to_sym) || super
   end
 end
