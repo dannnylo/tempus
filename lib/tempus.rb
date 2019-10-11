@@ -126,6 +126,11 @@ class Tempus
     Tempus.new(data * transform(other))
   end
 
+  # Division values of instance
+  def /(other)
+    Tempus.new(data / transform(other))
+  end
+
   def human
     [
       ('menos' if negative?),

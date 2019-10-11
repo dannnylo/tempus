@@ -75,6 +75,11 @@ RSpec.describe Tempus do
     expect((hours * 0.5).to_s).to eq('15:02:31')
   end
 
+  it 'division' do
+    expect((hours / 0.5).to_s).to eq('60:10:06')
+    expect((hours / 2).to_s).to eq('15:02:31')
+  end
+
   it 'validates the value in methods' do
     expect(1.day.to_tempus.value_in_days).to eq(1)
     expect(1.day.to_tempus.to_xls_time).to eq(1)
