@@ -17,7 +17,7 @@ class Tempus
   MINUTES_REGEX = /(\%m|\%mm|\%M|\%MM)/.freeze
   SECONDS_REGEX = /(\%s|\%ss|\%S|\%SS)/.freeze
 
-  attr_accessor :data
+  attr_reader :data
 
   delegate :to_i, :to_f, :negative?, :positive?, to: :data
 
@@ -119,6 +119,11 @@ class Tempus
   # Subtract values of instance
   def -(other)
     Tempus.new(data - transform(other))
+  end
+
+  # Multiplication values of instance
+  def *(other)
+    Tempus.new(data * transform(other))
   end
 
   def human
