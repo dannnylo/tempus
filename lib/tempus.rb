@@ -60,7 +60,7 @@ class Tempus
   alias to_string to_s
 
   def format_number_abs(number)
-    format('%02d', number.to_i.abs)
+    format('%02<number>d', number: number.to_i.abs)
   end
 
   def seconds

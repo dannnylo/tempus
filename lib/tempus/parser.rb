@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Parser others types to value
 class Parser
   def initialize(only_hours = true)
     @only_hours = only_hours

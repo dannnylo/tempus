@@ -7,4 +7,4 @@ module TempusHelper
   end
 end
 
-Object.send(:include, TempusHelper)
+Object.include(TempusHelper)
