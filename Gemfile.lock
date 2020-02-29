@@ -26,7 +26,7 @@ GEM
       concurrent-ruby (~> 1.0)
     json (2.2.0)
     minitest (5.11.3)
-    rake (10.5.0)
+    rake (13.0.1)
     rspec (3.8.0)
       rspec-core (~> 3.8.0)
       rspec-expectations (~> 3.8.0)
@@ -60,7 +60,7 @@ PLATFORMS
 DEPENDENCIES
   bundler (~> 1.17)
   coveralls (~> 0.8)
-  rake (~> 10.0)
+  rake (~> 13.0)
   rspec (~> 3.0)
   simplecov (~> 0.1)
   tempus!
