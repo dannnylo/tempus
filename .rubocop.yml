@@ -1,3 +1,8 @@
 Metrics/BlockLength:
   Exclude:
+    - 'tempus.gemspec'
     - 'spec/**/*.rb'
+
+Layout/LineLength:
+  Exclude:
+    - 'tempus.gemspec'
