@@ -2,16 +2,17 @@
 
 # Parser others types to value
 class Parser
-  def initialize(only_hours = true)
+  def initialize(only_hours: true)
     @only_hours = only_hours
   end
 
   def parse(value)
     @value = value
 
-    if @value.is_a?(String)
+    case @value
+    when String
       from_string.to_f
-    elsif @value.is_a?(Time)
+    when Time
       from_time.to_f
     else
       @value.to_f

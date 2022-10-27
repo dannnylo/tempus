@@ -1,3 +1,6 @@
+AllCops:
+  NewCops: enable
+
 Metrics/BlockLength:
   Exclude:
     - 'tempus.gemspec'
@@ -6,3 +9,9 @@ Metrics/BlockLength:
 Layout/LineLength:
   Exclude:
     - 'tempus.gemspec'
+
+Style/RedundantRegexpEscape:
+  Enabled: false
+
+Gemspec/RequireMFA:
+  Enabled: false

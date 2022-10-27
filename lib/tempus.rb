@@ -23,8 +23,8 @@ class Tempus
 
   delegate :to_i, :to_f, :negative?, :positive?, to: :data
 
-  def initialize(value = 0, only_hours = true)
-    @parser = Parser.new(only_hours)
+  def initialize(value = 0, only_hours: true)
+    @parser = Parser.new(only_hours: only_hours)
 
     set(value)
   end

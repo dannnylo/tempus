@@ -21,7 +21,7 @@ RSpec.describe Tempus do
 
     midnight = Time.now.midnight
 
-    expect(Tempus.new(0, false).set(midnight)).to eq(midnight.to_i)
+    expect(Tempus.new(0, only_hours: false).set(midnight)).to eq(midnight.to_i)
   end
 
   it 'test output' do
