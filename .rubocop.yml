@@ -9,3 +9,9 @@ Metrics/BlockLength:
 Layout/LineLength:
   Exclude:
     - 'tempus.gemspec'
+
+Style/RedundantRegexpEscape:
+  Enabled: false
+
+Gemspec/RequireMFA:
+  Enabled: false
