@@ -1,68 +1,34 @@
 # Tempus
 
-<a href='http://badge.fury.io/rb/tempus'>
-    <img src="https://badge.fury.io/rb/tempus.png" alt="Gem Version" />
-</a>
+TODO: Delete this and the text below, and describe your gem
 
-Gem to efficiently manipulate the time, adding, subtracting and converting hours.
+Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/tempus`. To experiment with that code, run `bin/console` for an interactive prompt.
 
 ## Installation
 
-Add this line to your application's Gemfile:
+TODO: Replace `UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG` with your gem name right after releasing it to RubyGems.org. Please do not do it earlier due to security reasons. Alternatively, replace this section with instructions to install your gem from git if you don't plan to release to RubyGems.org.
 
-```ruby
-gem 'tempus'
-```
+Install the gem and add to the application's Gemfile by executing:
 
-And then execute:
+    $ bundle add UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG
 
-    $ bundle install
+If bundler is not being used to manage dependencies, install the gem by executing:
 
-Or install it yourself as:
-
-    $ gem install tempus
+    $ gem install UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG
 
 ## Usage
- With this gem you can manage durations of time.
 
-### Initialize with duration
-```ruby
-  hours = Tempus.new(30.hours  + 5.minutes + 3.seconds)
-  => <Tempus:8508680 seconds=108303.0, formated=30:05:03>
-  hours.value_in_minutes
-  => 1805.05
-  hours.to_s("%H hours and %M minutes")
-  => "30 hours and 05 minutes"
-```
-### Convert from other types
-```ruby
-  hours = "35:05:01".to_tempus
-  => <Tempus:7228060 seconds=126301.0, formated=35:05:01>
-  hours + 6.hours
-  => <Tempus:6931320 seconds=147901.0, formated=41:05:01>
-```
-```ruby
-  Tempus.new(Time.now)
-  => <Tempus:6578680 seconds=46455.162950918, formated=12:54:15>
-```
-
-### Sum durations
-
-```ruby
-  "1:00:00".to_tempus + "2:00"
-  => <Tempus:6634700 seconds=10800.0, formated=03:00:00>
-```
+TODO: Write usage instructions here
 
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and the created tag, and push the `.gem` file to [rubygems.org](https://rubygems.org).
 
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/dannnylo/tempus. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/dannnylo/tempus/blob/master/CODE_OF_CONDUCT.md).
-
 
 ## License
 
