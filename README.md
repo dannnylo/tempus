@@ -1,24 +1,52 @@
 # Tempus
 
-TODO: Delete this and the text below, and describe your gem
+<a href='http://badge.fury.io/rb/tempus'>
+    <img src="https://badge.fury.io/rb/tempus.png" alt="Gem Version" />
+</a>
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/tempus`. To experiment with that code, run `bin/console` for an interactive prompt.
+Gem to efficiently manipulate the time, adding, subtracting and converting hours.
 
 ## Installation
 
-TODO: Replace `UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG` with your gem name right after releasing it to RubyGems.org. Please do not do it earlier due to security reasons. Alternatively, replace this section with instructions to install your gem from git if you don't plan to release to RubyGems.org.
-
 Install the gem and add to the application's Gemfile by executing:
 
-    $ bundle add UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG
+    $ bundle add tempus
 
 If bundler is not being used to manage dependencies, install the gem by executing:
 
-    $ gem install UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG
+    $ gem install tempus
 
 ## Usage
 
-TODO: Write usage instructions here
+With this gem you can manage durations of time.
+
+### Initialize with duration
+```ruby
+  hours = Tempus.new(30.hours  + 5.minutes + 3.seconds)
+  => <Tempus:8508680 seconds=108303.0, formated=30:05:03>
+  hours.value_in_minutes
+  => 1805.05
+  hours.to_s("%H hours and %M minutes")
+  => "30 hours and 05 minutes"
+```
+### Convert from other types
+```ruby
+  hours = "35:05:01".to_tempus
+  => <Tempus:7228060 seconds=126301.0, formated=35:05:01>
+  hours + 6.hours
+  => <Tempus:6931320 seconds=147901.0, formated=41:05:01>
+```
+```ruby
+  Tempus.new(Time.now)
+  => <Tempus:6578680 seconds=46455.162950918, formated=12:54:15>
+```
+
+### Sum durations
+
+```ruby
+  "1:00:00".to_tempus + "2:00"
+  => <Tempus:6634700 seconds=10800.0, formated=03:00:00>
+```
 
 ## Development
 
