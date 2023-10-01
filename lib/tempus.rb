@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require 'active_support'
-require 'active_support/core_ext'
+require "active_support"
+require "active_support/core_ext"
 
-require 'tempus/version'
-require 'tempus/parser'
-require 'tempus/tempus_helper'
+require_relative "tempus/version"
+require_relative "tempus/parser"
+require_relative "tempus/tempus_helper"
 
 # Class to manipulate efficiently time
 #=== Example:
@@ -14,9 +14,9 @@ require 'tempus/tempus_helper'
 class Tempus
   class Error < StandardError; end
 
-  HOURS_REGEX = /(\%h|\%hh|\%H|\%HH)/.freeze
-  MINUTES_REGEX = /(\%m|\%mm|\%M|\%MM)/.freeze
-  SECONDS_REGEX = /(\%s|\%ss|\%S|\%SS)/.freeze
+  HOURS_REGEX = /(%h|%hh|%H|%HH)/.freeze
+  MINUTES_REGEX = /(%m|%mm|%M|%MM)/.freeze
+  SECONDS_REGEX = /(%s|%ss|%S|%SS)/.freeze
   OPERATIONS = %i[+ - * /].freeze
 
   attr_reader :data
@@ -47,10 +47,10 @@ class Tempus
   ## => "-30:05"
   ## >> duration.to_s("%H*%M*%S")
   ## => "-30*05*03"
-  def to_s(string = '%H:%M:%S')
+  def to_s(string = "%H:%M:%S")
     text = string.dup
 
-    text['%'] = '-%' if text != '' && negative?
+    text["%"] = "-%" if text != "" && negative?
 
     text = text.gsub(HOURS_REGEX, format_number_abs(hours))
     text = text.gsub(MINUTES_REGEX, format_number_abs(minutes))
@@ -60,7 +60,7 @@ class Tempus
   alias to_string to_s
 
   def format_number_abs(number)
-    format('%02<number>d', number: number.to_i.abs)
+    format("%02<number>d", number: number.to_i.abs)
   end
 
   def seconds
@@ -95,12 +95,12 @@ class Tempus
 
   def human
     [
-      ('menos' if negative?),
+      ("menos" if negative?),
       "#{hours.abs} horas",
       "#{minutes.abs} minutos",
-      'e',
+      "e",
       "#{seconds.abs} segundos"
-    ].compact.join(' ')
+    ].compact.join(" ")
   end
 
   def inspect

@@ -28,13 +28,13 @@ class Parser
   end
 
   def from_string
-    str = @value.to_s.split(':')
+    str = @value.to_s.split(":")
     value = 0
 
     %i[hours minutes seconds].each_with_index do |m, i|
       value += str.at(i).to_i.abs.send(m.to_s)
     end
 
-    str.to_s.include?('-') ? value * -1 : value
+    str.to_s.include?("-") ? value * -1 : value
   end
 end
